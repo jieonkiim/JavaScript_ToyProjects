@@ -1,0 +1,59 @@
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word-Relay</title>
+</head>
+
+<body>
+    <div><span id="order">1</span>번째 참가자</div>
+    <div>제시어: <span id="word"></span></div>
+    <input type="text">
+    <button>입력</button>
+
+    <script>
+        const number = parseInt(prompt('몇 명이 참가하나요?'), 10);
+        const $button = document.querySelector('button');
+        const $input = document.querySelector('input');
+        const $word = document.querySelector('#word');
+        const $order = document.querySelector('#order');
+        let word;
+        let newWord; //새로 입력한 값
+
+
+
+        const onClickButton = () => {
+            if (!word || word[word.length - 1] === newWord[0]) { // 제시어가 비어있는가 ? (!word앞의 !는 비어있다는 뜻)
+
+                // 비어있다.
+                word = newWord; // 입력한 단어가 제시어가 된다
+                $word.textContent = word; // 제시어가 입력된다
+
+                //순서 textContent바꾸기 
+                const order = Number($order.textContent);
+                if (order + 1 > number) { // 현재순서에 +1이 number 보다 크지않으면
+                    $order.textContent = 1;
+                } else { // 현재순서에 +1이 number 보다 크면
+                    $order.textContent = order + 1;
+                }
+
+            } else {
+                alert('올바르지 않은 단어입니다!')
+            }
+
+            $input.value = ''; // 입력 후 input칸 비워주기
+            $input.focus(); // 아무 클릭 전, 커서가 깜빡깜빡하게끔 한다
+        };
+
+        const onInput = (event) => {
+            newWord = event.target.value;
+        };
+
+        $button.addEventListener('click', onClickButton);
+        $input.addEventListener('input', onInput);
+    </script>
+</body>
+
+</html>
